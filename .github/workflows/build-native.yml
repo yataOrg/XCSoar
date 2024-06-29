@@ -161,19 +161,19 @@ jobs:
           if [ ${{ matrix.os }} == 'ubuntu-22.04' ]; then
             sudo ./ide/provisioning/install-debian-packages.sh UPDATE
             sudo ./ide/provisioning/install-debian-packages.sh BASE
-            if ${{ matrix.target }} == 'UNIX' ]; then
+            if [ ${{ matrix.target }} == 'UNIX' ]; then
               sudo ./ide/provisioning/install-debian-packages.sh LINUX
             fi
-            if ${{ matrix.target }} == 'KOBO' ]; then
+            if [ ${{ matrix.target }} == 'KOBO' ]; then
               sudo ./ide/provisioning/install-debian-packages.sh LINUX
               sudo ./ide/provisioning/install-debian-packages.sh ARM
               sudo ./ide/provisioning/install-debian-packages.sh KOBO
             fi
-            if ${{ matrix.target }} == 'WIN64' ]; then
+            if [ ${{ matrix.target }} == 'WIN64' ]; then
               sudo ./ide/provisioning/install-debian-packages.sh LINUX
               sudo ./ide/provisioning/install-debian-packages.sh WIN
             fi
-            if ${{ matrix.target }} == 'ANDROID' ]; then
+            if [ ${{ matrix.target }} == 'ANDROID' ]; then
               sudo ./ide/provisioning/install-debian-packages.sh LINUX
               sudo ./ide/provisioning/install-debian-packages.sh ARM
               sudo ./ide/provisioning/install-debian-packages.sh ANDROID

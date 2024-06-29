@@ -78,7 +78,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     needs: release
     container:
-      image: debian-slim:stable
+      image: debian:bookworm-slim
     strategy:
       fail-fast: false
       matrix:

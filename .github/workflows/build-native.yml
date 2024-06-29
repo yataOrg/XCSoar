@@ -90,6 +90,7 @@ jobs:
             target_final: xcsoar
             target_ext: ''
             target_upload: true
+            container_build: true
           - os: ubuntu-22.04
             target: KOBO
             target_bin: KoboRoot
@@ -97,6 +98,7 @@ jobs:
             target_final: KoboRoot
             target_ext: .tgz
             target_upload: true
+            container_build: true
           - os: ubuntu-22.04
             target: ANDROID
             target_bin: XCSoar-debug
@@ -104,6 +106,7 @@ jobs:
             target_final: XCSoar
             target_ext: .apk
             target_upload: true
+            container_build: true
             ndk: r26d
           - os: ubuntu-22.04
             target: WIN64
@@ -111,7 +114,7 @@ jobs:
             target_bin_path: bin
             target_final: XCSoar
             target_ext: .exe
-            container: debian:bookworm-slim
+            container_build: true
             target_upload: true
           - os: macos-12
             target: OSX64
@@ -122,7 +125,7 @@ jobs:
             target_upload: false
 
     steps:
-      - name: set vars for release
+      - name: Set vars for release
         if: startsWith(github.ref, 'refs/tags/v')
         run: |
           echo "DEBUG=n" >> $GITHUB_ENV
@@ -240,7 +243,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.target_final }}-${{ env.git_hash }}${{ matrix.target_ext }}
-          path: output/${{ matrix.target }}/{{ matrix.target_path }}/${{ matrix.target_bin }}${{ matrix.target_ext }}
+          path: output/${{ matrix.target }}/${{ matrix.target_bin_path }}/${{ matrix.target_bin }}${{ matrix.target_ext }}
 
       - name: Upload Release Asset
         id: upload-release-asset
@@ -252,7 +255,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ needs.release.outputs.upload_url }}
-          asset_path: output/${{ matrix.target }}/bin/${{ matrix.target_bin }}${{ matrix.target_ext }}
+          asset_path: output/${{ matrix.target }}/${{ matrix.target_bin_path }}/${{ matrix.target_bin }}${{ matrix.target_ext }}
           asset_name: ${{ matrix.target_final }}-${{ matrix.target }}${{ matrix.target_ext }}
           asset_content_type: application/zip
 
@@ -265,7 +268,7 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.REPOSITORY_SSH_KEY }}
           ARGS: "-rltgoDzvO"
-          SOURCE: output/${{ matrix.target }}/bin/${{ matrix.target_bin }}${{ matrix.target_ext }}
+          SOURCE: output/${{ matrix.target }}/${{ matrix.target_bin_path }}/${{ matrix.target_bin }}${{ matrix.target_ext }}
           REMOTE_HOST: ${{ secrets.REPOSITORY_HOST }}
           REMOTE_USER: ${{ secrets.REPOSITORY_SSH_USER }}
           TARGET: ${{ secrets.REPOSITORY_REMOTE_PATH }}/testing/${{ matrix.target }}/
@@ -274,8 +277,8 @@ jobs:
     runs-on: windows-latest
     needs: build
     if: |
-      ${{ needs.build.target }} == 'WIN64' ||
-      ${{ needs.build.target }} == 'PC'
+      ${{ matrix.target == 'WIN64' }} ||
+      ${{ matrix.target == 'PC' }}
     strategy:
       matrix:
         os: [windows-latest]

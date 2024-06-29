@@ -276,9 +276,7 @@ jobs:
   test-windows:
     runs-on: windows-latest
     needs: build
-    if: |
-      ${{ matrix.target == 'WIN64' }} ||
-      ${{ matrix.target == 'PC' }}
+    if: matrix.target == 'WIN64' ||  matrix.target == 'PC'
     strategy:
       matrix:
         os: [windows-latest]

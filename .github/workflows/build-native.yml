@@ -37,7 +37,7 @@ env:
 jobs:
   release:
     name: "Create Release"
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     permissions:
       contents: write
     outputs:
@@ -82,7 +82,7 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: ubuntu-latest
+          - os: ubuntu-22.04
             target: UNIX
             target_bin: xcsoar
             target_bin_path: bin
@@ -90,7 +90,7 @@ jobs:
             target_ext: ''
             target_upload: true
             target_container: debian:bookworm-slim
-          - os: ubuntu-latest
+          - os: ubuntu-22.04
             target: KOBO
             target_bin: KoboRoot
             target_bin_path: ''
@@ -98,7 +98,7 @@ jobs:
             target_ext: .tgz
             target_upload: true
             target_container: debian:bookworm-slim
-          - os: ubuntu-latest
+          - os: ubuntu-22.04
             target: ANDROID
             target_bin: XCSoar-debug
             target_bin_path: bin
@@ -107,7 +107,7 @@ jobs:
             target_upload: true
             ndk: r26d
             target_container: debian:bookworm-slim
-          - os: ubuntu-latest
+          - os: ubuntu-22.04
             target: WIN64
             target_bin: XCSoar.exe
             target_bin_path: bin
@@ -115,7 +115,7 @@ jobs:
             target_ext: .exe
             target_upload: true
             target_container: debian:bookworm-slim
-          - os: ubuntu-latest
+          - os: ubuntu-22.04
             target: PC
             target_bin: XCSoar.exe
             target_bin_path: bin

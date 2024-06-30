@@ -136,8 +136,8 @@ jobs:
       - name: Install checkout dependencies
         run: |
           if [ "${{ matrix.os }}" = 'ubuntu-22.04' ]; then
-            sudo apt-get update
-            sudo apt-get install -y --no-install-recommends git
+            apt-get update
+            apt-get install -y --no-install-recommends git
           fi
       - name: Set vars for release
         if: startsWith(github.ref, 'refs/tags/v')
@@ -169,26 +169,26 @@ jobs:
       - name: Install dependencies
         run: |
           if [ ${{ matrix.os }} = 'ubuntu-22.04' ]; then
-            sudo ./ide/provisioning/install-debian-packages.sh UPDATE
-            sudo ./ide/provisioning/install-debian-packages.sh BASE
+            ./ide/provisioning/install-debian-packages.sh UPDATE
+            ./ide/provisioning/install-debian-packages.sh BASE
             if [ ${{ matrix.target }} = 'UNIX' ]; then
-              sudo ./ide/provisioning/install-debian-packages.sh LINUX
+              ./ide/provisioning/install-debian-packages.sh LINUX
             fi
             if [ ${{ matrix.target }} = 'KOBO' ]; then
-              sudo ./ide/provisioning/install-debian-packages.sh LINUX
-              sudo ./ide/provisioning/install-debian-packages.sh ARM
-              sudo ./ide/provisioning/install-debian-packages.sh KOBO
+              ./ide/provisioning/install-debian-packages.sh LINUX
+              ./ide/provisioning/install-debian-packages.sh ARM
+              ./ide/provisioning/install-debian-packages.sh KOBO
             fi
             if [ ${{ matrix.target }} = 'WIN64' ]; then
-              sudo ./ide/provisioning/install-debian-packages.sh LINUX
-              sudo ./ide/provisioning/install-debian-packages.sh WIN
+              ./ide/provisioning/install-debian-packages.sh LINUX
+              ./ide/provisioning/install-debian-packages.sh WIN
             fi
             if [ ${{ matrix.target }} = 'ANDROID' ]; then
-              sudo ./ide/provisioning/install-debian-packages.sh LINUX
-              sudo ./ide/provisioning/install-debian-packages.sh ARM
-              sudo ./ide/provisioning/install-debian-packages.sh ANDROID
+              ./ide/provisioning/install-debian-packages.sh LINUX
+              ./ide/provisioning/install-debian-packages.sh ARM
+              ./ide/provisioning/install-debian-packages.sh ANDROID
             fi
-            sudo ./ide/provisioning/install-debian-packages.sh CLEAN
+            ./ide/provisioning/install-debian-packages.sh CLEAN
           elif [ ${{ matrix.os }} = 'macos-12' ]; then
             brew install \
               make \

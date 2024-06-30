@@ -184,9 +184,14 @@ jobs:
               ./ide/provisioning/install-debian-packages.sh LINUX
               ./ide/provisioning/install-debian-packages.sh WIN
             fi
+            if [ ${{ matrix.target }} = 'PC' ]; then
+              ./ide/provisioning/install-debian-packages.sh LINUX
+              ./ide/provisioning/install-debian-packages.sh WIN
+            fi
             if [ ${{ matrix.target }} = 'ANDROID' ]; then
               ./ide/provisioning/install-debian-packages.sh LINUX
               ./ide/provisioning/install-debian-packages.sh ARM
+              ./ide/provisioning/install-debian-packages.sh LLVM
               ./ide/provisioning/install-debian-packages.sh ANDROID
             fi
             ./ide/provisioning/install-debian-packages.sh CLEAN

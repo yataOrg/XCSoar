@@ -251,9 +251,9 @@ jobs:
 
       - name: Deploy to Staging server
         if: |
-          github.repository = 'XCSoar/XCSoar' &&
-          github.ref = 'refs/heads/master' &&
-          github.event = 'push'
+          github.repository == 'XCSoar/XCSoar' &&
+          github.ref == 'refs/heads/master' &&
+          github.event == 'push'
         uses: easingthemes/ssh-deploy@main
         env:
           SSH_PRIVATE_KEY: ${{ secrets.REPOSITORY_SSH_KEY }}

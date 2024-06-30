@@ -81,38 +81,34 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: ubuntu-22.04
+          - os: docker://debian:bookworm-slim
             target: UNIX
             target_bin: xcsoar
             target_bin_path: bin
             target_final: xcsoar
             target_ext: ''
             target_upload: true
-            container_build: true
-          - os: ubuntu-22.04
+          - os: docker://debian:bookworm-slim
             target: KOBO
             target_bin: KoboRoot
             target_bin_path: ''
             target_final: KoboRoot
             target_ext: .tgz
             target_upload: true
-            container_build: true
-          - os: ubuntu-22.04
+          - os: docker://debian:bookworm-slim
             target: ANDROID
             target_bin: XCSoar-debug
             target_bin_path: bin
             target_final: XCSoar
             target_ext: .apk
             target_upload: true
-            container_build: true
             ndk: r26d
-          - os: ubuntu-22.04
+          - os: docker://debian:bookworm-slim
             target: WIN64
             target_bin: XCSoar.exe
             target_bin_path: bin
             target_final: XCSoar
             target_ext: .exe
-            container_build: true
             target_upload: true
           - os: macos-12
             target: OSX64

@@ -135,7 +135,7 @@ jobs:
     steps:
       - name: Install checkout dependencies
         run: |
-          if [ ${{ matrix.os }} == 'ubuntu-22.04' ]; then
+          if [ "${{ matrix.os }}" == 'ubuntu-22.04' ]; then
             sudo apt-get update
             sudo apt-get install -y --no-install-recommends git
           fi

@@ -214,6 +214,7 @@ jobs:
 
       - name: Find githash
         run: |
+          git config --global --add safe.directory /__w/XCSoar/XCSoar
           echo "git_hash=$(git rev-parse --short $GITHUB_SHA)" >> $GITHUB_ENV
 
       - name: Compile XCSoar
@@ -221,7 +222,7 @@ jobs:
           if [ ${{ matrix.target }} = "ANDROID" ]; then
             mkdir -p output/download
             cd output/download
-            wget --quiet https://dl.google.com/android/repository/android-ndk-${{ matrix.ndk }}-linux.zip
+            wget https://dl.google.com/android/repository/android-ndk-${{ matrix.ndk }}-linux.zip
             unzip -q android-ndk-${{ matrix.ndk }}-linux.zip
             rm android-ndk-${{ matrix.ndk }}-linux.zip
             echo ANDROID_NDK_LATEST_HOME=$PWD/android-ndk-${{ matrix.ndk }} >> $GITHUB_ENV

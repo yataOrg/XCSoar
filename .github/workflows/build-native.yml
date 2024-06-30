@@ -229,6 +229,8 @@ jobs:
             make -j$(nproc) TARGET=${{ matrix.target }} ANDROID_NDK=$ANDROID_NDK_LATEST_HOME ANDROID_SDK=$ANDROID_HOME DEBUG=${{ env.DEBUG }} USE_CCACHE=y V=2
           elif [ ${{ matrix.target }} = "WIN64" ]; then
             make -j$(nproc) TARGET=${{ matrix.target }} DEBUG=${{ env.DEBUG }} USE_CCACHE=y V=2 everything
+          elif [ ${{ matrix.target }} = "PC" ]; then
+            make -j$(nproc) TARGET=${{ matrix.target }} DEBUG=${{ env.DEBUG }} USE_CCACHE=y V=2 everything
           elif [ ${{ matrix.target }} = "KOBO" ]; then
             make -j$(nproc) TARGET=${{ matrix.target }} DEBUG=${{ env.DEBUG }} USE_CCACHE=y V=2 output/${{ matrix.target }}/${{ matrix.target_bin }}${{ matrix.target_ext }}
           else

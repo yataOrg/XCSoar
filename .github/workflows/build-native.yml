@@ -77,25 +77,28 @@ jobs:
   build:
     runs-on: ${{ matrix.os }}
     needs: release
+    container: ${{ matrix.target_container }}
     strategy:
       fail-fast: false
       matrix:
         include:
-          - os: docker://debian:bookworm-slim
+          - os: ubuntu
             target: UNIX
             target_bin: xcsoar
             target_bin_path: bin
             target_final: xcsoar
             target_ext: ''
             target_upload: true
-          - os: docker://debian:bookworm-slim
+            target_container: debian:bookworm-slim
+          - os: ubuntu
             target: KOBO
             target_bin: KoboRoot
             target_bin_path: ''
             target_final: KoboRoot
             target_ext: .tgz
             target_upload: true
-          - os: docker://debian:bookworm-slim
+            target_container: debian:bookworm-slim
+          - os: ubuntu
             target: ANDROID
             target_bin: XCSoar-debug
             target_bin_path: bin
@@ -103,13 +106,15 @@ jobs:
             target_ext: .apk
             target_upload: true
             ndk: r26d
-          - os: docker://debian:bookworm-slim
+            target_container: debian:bookworm-slim
+          - os: ubuntu
             target: WIN64
             target_bin: XCSoar.exe
             target_bin_path: bin
             target_final: XCSoar
             target_ext: .exe
             target_upload: true
+            target_container: debian:bookworm-slim
           - os: macos-12
             target: OSX64
             target_bin: xcsoar
@@ -117,6 +122,7 @@ jobs:
             target_final: xcsoar
             target_ext: ''
             target_upload: false
+            target_container: ''
 
     steps:
       - name: Install checkout dependencies

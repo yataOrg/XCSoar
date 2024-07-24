@@ -90,7 +90,7 @@ jobs:
           - os: ubuntu-22.04
             target: UNIX
             target_bin: xcsoar_${{ needs.release.outputs.tags }}_amd64
-            target_bin_path: ../
+            target_bin_path: ./debian/artifacts/
             target_final: xcsoar_
             target_ext: deb
             target_upload: true
@@ -230,11 +230,6 @@ jobs:
         run: |
           if [ ${{ matrix.target }} = "ANDROID" ]; then
             make -j$(nproc) TARGET=${{ matrix.target }} DEBUG=${{ env.DEBUG }} USE_CCACHE=y V=2
-          elif [ ${{ matrix.target }} = "UNIX" ]; then
-            mkdir -p buildtmp
-            rsync -av --exclude buildtmp ./ ./buildtmp
-            cd buildtmp
-            DEB_BUILD_OPTIONS=ccache dpkg-buildpackage --jobs-force=$(nproc) --no-sign
           elif [ ${{ matrix.target }} = "WIN64" ]; then
             make -j$(nproc) TARGET=${{ matrix.target }} DEBUG=${{ env.DEBUG }} USE_CCACHE=y V=2 everything
           elif [ ${{ matrix.target }} = "PC" ]; then
@@ -243,9 +238,15 @@ jobs:
             make -j$(nproc) TARGET=${{ matrix.target }} DEBUG=${{ env.DEBUG }} USE_CCACHE=y V=2 output/${{ matrix.target }}/${{ matrix.target_bin }}${{ matrix.target_ext }}
           elif [ ${{ matrix.target }} = "OSX" ]; then
             make -j$(nproc) TARGET=${{ matrix.target }} DEBUG=${{ env.DEBUG }} USE_CCACHE=y V=2 output/${{ matrix.target }}/${{ matrix.target_bin }}${{ matrix.target_ext }} dmg
-          else
-            make -j$(nproc) TARGET=${{ matrix.target }} DEBUG=${{ env.DEBUG }} USE_CCACHE=y V=2 everything
           fi
+
+      - name: Create UNIX dpkg
+        uses: jtdor/build-deb-action@v1
+        if: matrix.target == 'UNIX'
+        env:
+          DEB_BUILD_OPTIONS: ccache
+        with:
+          buildpackage-opts: --jobs-force=$(nproc) --no-sign
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
